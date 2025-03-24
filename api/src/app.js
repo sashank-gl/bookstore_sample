@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import wishlistRoutes from "./routes/wishlistRoutes.js";
+
 import cors from "cors";
 
 dotenv.config();
@@ -22,6 +25,8 @@ app.use(express.json());
 // API routes
 app.use("/api/payments", paymentRoutes);
 app.use("/api/books", bookRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 const PORT = process.env.PORT || 3000;
 
