@@ -7,7 +7,7 @@ const HomePage = ({ addToCart, books }) => {
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [genre, setGenre] = useState("");
   const [author, setAuthor] = useState("");
-  const [sortOrder, setSortOrder] = useState("original");
+  const [sortOrder, setSortOrder] = useState("default");
 
   useEffect(() => {
     let updatedBooks = books;
@@ -43,53 +43,65 @@ const HomePage = ({ addToCart, books }) => {
   const uniqueAuthors = [...new Set(books.map((book) => book.author))];
 
   return (
-    <div className="p-6 bg-amber-50 h-screen">
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search books..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="p-2 border rounded mr-2"
-        />
-        <select
-          value={genre}
-          onChange={(e) => setGenre(e.target.value)}
-          className="p-2 border rounded mr-2"
-        >
-          <option value="">All Genres</option>
-          {uniqueGenres.map((g) => (
-            <option key={g} value={g}>
-              {g}
-            </option>
-          ))}
-        </select>
-        <select
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          className="p-2 border rounded mr-2"
-        >
-          <option value="">All Authors</option>
-          {uniqueAuthors.map((a) => (
-            <option key={a} value={a}>
-              {a}
-            </option>
-          ))}
-        </select>
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-          className="p-2 border rounded"
-        >
-          <option value="original">Original Order</option>
-          <option value="asc">Price: Low to High</option>
-          <option value="desc">Price: High to Low</option>
-        </select>
+    <div>
+      <div className="mb-8 container mx-auto flex justify-between items-center">
+        <div>
+          <input
+            type="text"
+            placeholder="Search books"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="p-2 border border-amber-800 rounded focus:outline-amber-900 w-96"
+          />
+        </div>
+        <div>
+          <select
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+            className="p-2 border border-amber-800 rounded focus:outline-none mr-2"
+          >
+            <option value="">All Genres</option>
+            {uniqueGenres.map((g) => (
+              <option key={g} value={g}>
+                {g}
+              </option>
+            ))}
+          </select>
+          <select
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            className="p-2 border border-amber-800 rounded focus:outline-none mr-2"
+          >
+            <option value="">All Authors</option>
+            {uniqueAuthors.map((a) => (
+              <option key={a} value={a}>
+                {a}
+              </option>
+            ))}
+          </select>
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="p-2 border border-amber-800 rounded focus:outline-none"
+          >
+            <option value="default">Sort (Default)</option>
+            <option value="asc">Price: Low to High</option>
+            <option value="desc">Price: High to Low</option>
+          </select>
+        </div>
       </div>
-      <div className="grid grid-cols-5 gap-4 place-items-center">
-        {filteredBooks.map((book) => (
-          <BookItem key={book._id} book={book} addToCart={addToCart} />
-        ))}
+      <div>
+        {filteredBooks.length === 0 ? (
+          <p className="text-center text-xl italic font-semibold ">
+            No results found.
+          </p>
+        ) : (
+          <div className="grid grid-cols-5 gap-4 place-items-center">
+            {filteredBooks.map((book) => (
+              <BookItem key={book._id} book={book} addToCart={addToCart} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

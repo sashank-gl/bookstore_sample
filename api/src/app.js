@@ -5,6 +5,7 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 import cors from "cors";
 
@@ -16,7 +17,7 @@ const app = express();
 app.use(
   cors({
     origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
   })
 );
 
@@ -27,6 +28,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/cart", cartRoutes);
 
 const PORT = process.env.PORT || 3000;
 

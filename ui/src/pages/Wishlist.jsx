@@ -40,16 +40,10 @@ const Wishlist = ({ addToCart }) => {
         {wishlist.map((book) => (
           <div key={book._id}>
             <BookItem book={book} addToCart={addToCart} />
-            <div className="flex gap-2 mt-2">
-              <button
-                onClick={() => removeFromWishlist(book._id)}
-                className="bg-red-500 text-white px-4 py-2 rounded"
-              >
-                Remove
-              </button>
+            <div className="flex gap-2 mt-4">
               <button
                 onClick={() => addToCart(book)}
-                className="bg-green-500 text-white px-4 py-2 rounded"
+                className="w-full px-4 py-2 rounded bg-amber-100 hover:bg-amber-200 cursor-pointer"
               >
                 Add to Cart
               </button>

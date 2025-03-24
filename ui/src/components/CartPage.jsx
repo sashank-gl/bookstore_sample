@@ -1,12 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
-const CartPage = ({ cart, handleCheckout }) => (
-  <div className="p-6 flex justify-center items-start bg-amber-50 h-screen">
-    <div className=" bg-amber-100 rounded p-4 mt-24">
-      <h2 className="text-2xl font-bold mb-4 text-center">Cart</h2>
-      {cart.length === 0 && <p>Your cart is empty.</p>}
-      <div className="flex flex-col gap-4 mb-8">
+const CartPage = ({ cart }) => {
+  const { user } = useContext(AuthContext);
+
+  const removeFromCart = async (bookId) => {
+    if (!user) return;
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/cart/${user.id}/remove/${bookId}`
+      );
+    } catch (error) {
+      console.error("Error removing from cart:", error);
+    }
+  };
+
+  const handleCheckout = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/payments/pay",
+        { cart }
+      );
+      const { url } = response.data;
+      window.location.href = url;
+    } catch (error) {
+      console.error("Checkout error:", error.response?.data || error.message);
+      alert("Failed to initiate payment. Please try again.");
+    }
+  };
+
+  return (
+    <div className="p-6 rounded bg-amber-100 space-y-4">
+      {cart.length === 0 && <p className="text-center">Your cart is empty.</p>}
+
+      <div className="flex flex-col gap-4">
         {cart.map((book, index) => (
           <div key={index} className="flex gap-4">
             <img
@@ -15,21 +44,23 @@ const CartPage = ({ cart, handleCheckout }) => (
               className="size-12 object-cover rounded-lg"
             />
             <div>
-              <p>{book.title}</p>
-              <p>₹ {book.price}</p>
+              <p className=" text-lg">{book.title}</p>
+              <p>₹{book.price}</p>
             </div>
+            <button
+              onClick={() => removeFromCart(book._id)}
+              className="text-red-500 hover:text-red-700"
+            >
+              Remove
+            </button>
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center gap-4">
-        <Link to="/">
-          <button className=" px-4 py-2 rounded hover:bg-amber-200 cursor-pointer">
-            Go Back
-          </button>
-        </Link>
+
+      <div>
         {cart.length > 0 && (
           <button
-            className="bg-amber-500 text-white px-4 py-2 rounded hover:bg-amber-600 cursor-pointer"
+            className="w-full bg-amber-500 text-white px-4 py-2 rounded hover:bg-amber-600 cursor-pointer"
             onClick={handleCheckout}
           >
             Proceed to Checkout
@@ -37,7 +68,7 @@ const CartPage = ({ cart, handleCheckout }) => (
         )}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default CartPage;
