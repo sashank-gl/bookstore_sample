@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import CartPage from "./CartPage";
 import axios from "axios";
@@ -9,6 +9,24 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
   const [showCart, setShowCart] = useState(false);
+  const cartRef = useRef(null);
+
+  useEffect(() => {
+    // Function to close cart if clicked outside
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        setShowCart(false);
+      }
+    };
+
+    if (showCart) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showCart]);
 
   useEffect(() => {
     if (user) {
@@ -26,6 +44,7 @@ const Navbar = () => {
 
       <div className="flex items-center gap-4">
         <div
+          ref={cartRef}
           onClick={() => setShowCart(!showCart)}
           className="relative cursor-pointer flex gap-2 items-center "
         >
