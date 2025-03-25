@@ -1,21 +1,9 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { CartContext } from "../context/cartContext";
 
-const CartPage = ({ cart }) => {
-  const { user } = useContext(AuthContext);
-
-  const removeFromCart = async (bookId) => {
-    if (!user) return;
-
-    try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/cart/${user.id}/remove/${bookId}`
-      );
-    } catch (error) {
-      console.error("Error removing from cart:", error);
-    }
-  };
+const CartPage = () => {
+  const { cart, removeFromCart } = useContext(CartContext);
 
   const handleCheckout = async () => {
     try {
@@ -23,8 +11,7 @@ const CartPage = ({ cart }) => {
         "http://localhost:5000/api/payments/pay",
         { cart }
       );
-      const { url } = response.data;
-      window.location.href = url;
+      window.location.href = response.data.url;
     } catch (error) {
       console.error("Checkout error:", error.response?.data || error.message);
       alert("Failed to initiate payment. Please try again.");
@@ -36,15 +23,15 @@ const CartPage = ({ cart }) => {
       {cart.length === 0 && <p className="text-center">Your cart is empty.</p>}
 
       <div className="flex flex-col gap-4">
-        {cart.map((book, index) => (
-          <div key={index} className="flex gap-4">
+        {cart.map((book) => (
+          <div key={book._id} className="flex gap-4">
             <img
               src={book.image}
               alt={book.title}
               className="size-12 object-cover rounded-lg"
             />
             <div>
-              <p className=" text-lg">{book.title}</p>
+              <p className="text-lg">{book.title}</p>
               <p>₹{book.price}</p>
             </div>
             <button
@@ -57,16 +44,14 @@ const CartPage = ({ cart }) => {
         ))}
       </div>
 
-      <div>
-        {cart.length > 0 && (
-          <button
-            className="w-full bg-amber-500 text-white px-4 py-2 rounded hover:bg-amber-600 cursor-pointer"
-            onClick={handleCheckout}
-          >
-            Proceed to Checkout
-          </button>
-        )}
-      </div>
+      {cart.length > 0 && (
+        <button
+          className="w-full bg-amber-500 text-white px-4 py-2 rounded hover:bg-amber-600 cursor-pointer"
+          onClick={handleCheckout}
+        >
+          Proceed to Checkout
+        </button>
+      )}
     </div>
   );
 };

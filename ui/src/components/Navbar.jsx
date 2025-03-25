@@ -1,19 +1,19 @@
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
 import CartPage from "./CartPage";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+import { CartContext } from "../context/cartContext";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
-  const [cart, setCart] = useState([]);
+  const { cart } = useContext(CartContext);
   const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     if (user) {
       axios
         .get(`http://localhost:5000/api/cart/${user.id}`)
-        .then((res) => setCart(res.data))
         .catch((err) => console.error("Error fetching cart:", err));
     }
   }, [user]);
