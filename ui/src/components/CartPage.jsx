@@ -1,15 +1,18 @@
 import React, { useContext } from "react";
 import axios from "axios";
 import { CartContext } from "../context/cartContext";
+import { AuthContext } from "../context/AuthContext";
 
 const CartPage = () => {
   const { cart, removeFromCart } = useContext(CartContext);
+  const { user } = useContext(AuthContext);
 
   const handleCheckout = async () => {
     try {
+      const userId = user.id;
       const response = await axios.post(
         "http://localhost:5000/api/payments/pay",
-        { cart }
+        { cart, userId }
       );
       window.location.href = response.data.url;
     } catch (error) {

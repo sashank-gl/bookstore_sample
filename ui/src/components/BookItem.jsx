@@ -1,58 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { WishlistContext } from "../context/WishlistContext";
 
 const BookItem = ({ book }) => {
-  const { user } = useContext(AuthContext);
-  const [wishlist, setWishlist] = useState(new Set());
+  const { wishlist, addToWishlist, removeFromWishlist } =
+    useContext(WishlistContext);
 
-  useEffect(() => {
-    if (user) {
-      fetch(`http://localhost:5000/api/wishlist/${user.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          const wishlistSet = new Set(data.map((item) => item._id));
-          setWishlist(wishlistSet);
-        })
-        .catch((error) => console.error("Error fetching wishlist:", error));
-    }
-  }, [user]);
-
-  const toggleWishlist = async (e) => {
-    e.preventDefault();
-    if (!user) {
-      alert("Please log in to manage your wishlist.");
-      return;
-    }
-
-    const isWishlisted = wishlist.has(book._id);
-    const url = `http://localhost:5000/api/wishlist/${user.id}/${
-      isWishlisted ? `remove/${book._id}` : "add"
-    }`;
-    const method = isWishlisted ? "DELETE" : "POST";
-
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: isWishlisted ? null : JSON.stringify({ bookId: book._id }), // No body for DELETE
-      });
-
-      if (response.ok) {
-        const updatedWishlist = new Set(wishlist);
-        isWishlisted
-          ? updatedWishlist.delete(book._id)
-          : updatedWishlist.add(book._id);
-        setWishlist(updatedWishlist);
-      } else {
-        const errorData = await response.json();
-        alert(errorData.error || "Failed to update wishlist.");
-      }
-    } catch (error) {
-      console.error("Error updating wishlist:", error);
-      alert("An error occurred. Please try again.");
-    }
-  };
+  const isWishlisted = wishlist.some((item) => item._id === book._id);
 
   return (
     <Link to={`/book/${book._id}`}>
@@ -66,7 +20,14 @@ const BookItem = ({ book }) => {
         <p className="text-sm text-amber-800/80 text-center">{book.author}</p>
         <div className="flex justify-between gap-8 w-full mt-4">
           <p className="text-lg font-bold">₹{book.price}</p>
-          <button onClick={toggleWishlist}>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              isWishlisted
+                ? removeFromWishlist(book._id)
+                : addToWishlist(book._id);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -74,7 +35,7 @@ const BookItem = ({ book }) => {
               strokeWidth="1.5"
               stroke="currentColor"
               className={`size-6 ${
-                wishlist.has(book._id) && "text-transparent fill-red-500"
+                isWishlisted && "text-transparent fill-red-500"
               }`}
             >
               <path
