@@ -8,9 +8,16 @@ const UserProfile = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold">Profile</h1>
-      <p>Username: {user.username}</p>
-      <p>Email: {user.email}</p>
+      <p className="text-3xl font-semibold">Hello {user.username},</p>
+      <div>
+        <p className="text-3xl font-semibold">Your Recent Orders</p>
+      </div>
+      <div>
+        <p className="text-3xl font-semibold">Items In Your Cart</p>
+      </div>
+      <div>
+        <p className="text-3xl font-semibold">Items In Your Wishlist</p>
+      </div>
     </div>
   );
 };
