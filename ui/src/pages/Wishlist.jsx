@@ -16,7 +16,7 @@ const Wishlist = () => {
   if (!user) return <p>Please log in to view your wishlist.</p>;
 
   return (
-    <div className="p-6">
+    <div className="py-6 container mx-auto">
       <h1 className="text-2xl font-bold mb-4">Your Wishlist</h1>
       <div className="grid grid-cols-5 gap-4">
         {wishlist.map((book) => {

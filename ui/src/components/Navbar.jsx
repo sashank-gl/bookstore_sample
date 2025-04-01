@@ -37,9 +37,12 @@ const Navbar = () => {
   }, [user]);
 
   return (
-    <div className=" flex items-center justify-between pt-4 pb-8 container mx-auto">
-      <Link to="/" className="text-3xl font-semibold italic text-amber-800">
-        The Bookshelf
+    <div className=" flex items-center  justify-between pt-4 pb-8 container mx-auto">
+      <Link
+        to="/"
+        className="text-3xl font-semibold  text-amber-800 flex gap-2 items-end"
+      >
+        <img src="/Bookshelf.png" className="h-10" /> The Bookshelf
       </Link>
 
       <div className="flex items-center gap-4">

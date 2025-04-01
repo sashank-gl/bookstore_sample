@@ -23,17 +23,16 @@ const UserProfile = () => {
   if (!user) return <p>Please log in to view your profile.</p>;
 
   return (
-    <div className="p-6">
-      <p className="text-3xl font-semibold">Hello {user.username},</p>
+    <div className="py-6 container mx-auto space-y-6">
+      <p className="">
+        Hello <span className="font-semibold text-lg">{user.username}</span>,
+      </p>
       <div>
-        <p className="text-xl">Your Orders ({orders.length})</p>
+        <p className=" mb-4">Your Orders ({orders.length})</p>
         {orders.length > 0 ? (
-          <div className="space-y-6">
+          <div className="grid grid-cols-2 gap-6">
             {orders.map((order) => (
-              <div
-                key={order._id}
-                className="my-6 p-6 flex  gap-6 bg-amber-100/50"
-              >
+              <div key={order._id} className="p-6 flex  gap-6 bg-amber-100/50">
                 <div className="flex gap-4">
                   {order.books.map(({ book }) => (
                     <a
@@ -44,13 +43,21 @@ const UserProfile = () => {
                       <img
                         src={book.image}
                         alt={book.title}
-                        className="w-24 h-32 object-cover rounded-lg hover:opacity-80 transition-opacity"
+                        className="w-20 h-28 object-cover rounded-lg hover:opacity-80 transition-opacity"
                       />
                     </a>
                   ))}
                 </div>
                 <div className=" flex flex-col gap-1">
-                  <p className=" ">Order ID: {order._id}</p>
+                  <p className=" ">ID: {order._id.slice(-6).toUpperCase()}</p>
+                  <p className=" ">
+                    Purchased on{" "}
+                    {new Date(order.orderDate).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "2-digit",
+                    })}
+                  </p>
                   <p className=" ">Status: {order.status}</p>
                   <p className=" ">Total Price: ₹{order.totalPrice}</p>
                 </div>
@@ -62,15 +69,15 @@ const UserProfile = () => {
         )}
       </div>
       <div>
-        <p className="text-xl">Items In Your Cart ({cart.length})</p>
+        <p className=" mb-4">Items In Your Cart ({cart.length})</p>
         {cart.length > 0 ? (
-          <div className="flex gap-4 mt-2">
+          <div className="flex gap-4 ">
             {cart.map((item) => (
               <a key={item._id} href={`/book/${item._id}`} className="block">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-24 h-32 object-cover rounded-lg hover:opacity-80 transition-opacity"
+                  className="w-20 h-28 object-cover rounded-lg hover:opacity-80 transition-opacity"
                 />
               </a>
             ))}
@@ -80,15 +87,15 @@ const UserProfile = () => {
         )}
       </div>
       <div>
-        <p className="text-xl">Items In Your Wishlist ({wishlist.length})</p>
+        <p className=" mb-4">Items In Your Wishlist ({wishlist.length})</p>
         {wishlist.length > 0 ? (
-          <div className="flex gap-4 mt-2">
+          <div className="flex gap-4 ">
             {wishlist.map((item) => (
               <a key={item._id} href={`/book/${item._id}`} className="block">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-24 h-32 object-cover rounded-lg hover:opacity-80 transition-opacity"
+                  className="w-20 h-28 object-cover rounded-lg hover:opacity-80 transition-opacity"
                 />
               </a>
             ))}
