@@ -33,6 +33,6 @@ export const login = async (req, res) => {
 
     res.json({ token });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: `JWT ${error.message}` });
   }
 };

@@ -43,8 +43,8 @@ const HomePage = ({ addToCart, books }) => {
   const uniqueAuthors = [...new Set(books.map((book) => book.author))];
 
   return (
-    <div>
-      <div className="mb-8 container mx-auto flex justify-between items-center">
+    <div className="container mx-auto">
+      <div className="mb-8 flex justify-between items-center">
         <div>
           <input
             type="text"
