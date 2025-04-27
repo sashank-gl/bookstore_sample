@@ -8,12 +8,11 @@ export const CartProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const [cart, setCart] = useState([]);
 
-  // Fetch cart items when user logs in or cart updates
   useEffect(() => {
     if (user) {
       fetchCart();
     } else {
-      setCart([]); // Clear cart when user logs out
+      setCart([]);
     }
   }, [user]);
 
@@ -39,7 +38,7 @@ export const CartProvider = ({ children }) => {
       await axios.post(`http://localhost:5000/api/cart/${user.id}/add`, {
         bookId,
       });
-      fetchCart(); // Fetch updated cart
+      fetchCart();
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -52,7 +51,7 @@ export const CartProvider = ({ children }) => {
       await axios.delete(
         `http://localhost:5000/api/cart/${user.id}/remove/${bookId}`
       );
-      fetchCart(); // Fetch updated cart after removal
+      fetchCart();
     } catch (error) {
       console.error("Error removing from cart:", error);
     }

@@ -16,8 +16,10 @@ const BookItem = ({ book }) => {
           alt={book.title}
           className="w-44 h-64 object-cover rounded-lg mb-4"
         />
+
         <h2 className="text-xl font-semibold text-center mb-1">{book.title}</h2>
         <p className="text-sm text-amber-800/80 text-center">{book.author}</p>
+
         <div className="flex justify-between gap-8 w-full mt-4">
           <p className="text-lg font-bold">₹{book.price}</p>
           <button

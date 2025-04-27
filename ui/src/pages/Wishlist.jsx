@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
 import BookItem from "../components/BookItem";
 import Toast from "../components/Toast";
 
+import { AuthContext } from "../context/AuthContext";
 import { WishlistContext } from "../context/WishlistContext";
-import { CartContext } from "../context/cartContext";
+import { CartContext } from "../context/CartContext";
 
 const Wishlist = () => {
   const { user } = useContext(AuthContext);
@@ -18,6 +18,7 @@ const Wishlist = () => {
   return (
     <div className="py-6 container mx-auto">
       <h1 className="text-2xl font-bold mb-4">Your Wishlist</h1>
+
       <div className="grid grid-cols-5 gap-4">
         {wishlist.map((book) => {
           const isInCart = cart.some((cartItem) => cartItem._id === book._id);
@@ -25,6 +26,7 @@ const Wishlist = () => {
           return (
             <div key={book._id}>
               <BookItem book={book} />
+
               <div className="flex gap-2 mt-4">
                 <button
                   onClick={() => {
@@ -47,6 +49,7 @@ const Wishlist = () => {
           );
         })}
       </div>
+
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => setToastMessage("")} />
       )}

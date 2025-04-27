@@ -21,12 +21,14 @@ const SuccessPage = () => (
       <p>
         Thank you for your purchase. Your order has been processed successfully.
       </p>
+
       <div className="flex gap-6">
         <Link to="/">
           <button className="w-full px-4 py-2 rounded cursor-pointer bg-amber-100 hover:bg-amber-200">
             Back to Home
           </button>
         </Link>
+
         <Link to="/profile">
           <button className="w-full px-4 py-2 rounded cursor-pointer bg-amber-100 hover:bg-amber-200">
             View Orders

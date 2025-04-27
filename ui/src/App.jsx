@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./index.css";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
+import "./index.css";
+
 import HomePage from "./pages/HomePage";
-import { AuthProvider } from "./context/AuthContext";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
@@ -11,9 +11,11 @@ import ProductDetails from "./pages/ProductDetails";
 import UserProfile from "./pages/UserProfile";
 import Wishlist from "./pages/Wishlist";
 import Footer from "./components/Footer";
-import { CartProvider } from "./context/cartContext";
-import WishlistProvider from "./context/WishlistContext";
 import SuccessPage from "./components/SuccessPage";
+
+import { AuthProvider } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
+import WishlistProvider from "./context/WishlistContext";
 
 export default function App() {
   const [books, setBooks] = useState([]);

@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-
 import Toast from "../components/Toast";
 import { AuthContext } from "../context/AuthContext";
-import { CartContext } from "../context/cartContext";
+import { CartContext } from "../context/CartContext";
 import { WishlistContext } from "../context/WishlistContext";
 
 const ProductDetails = () => {
@@ -19,7 +18,6 @@ const ProductDetails = () => {
     if (user) {
       fetch(`http://localhost:5000/api/wishlist/${user.id}`)
         .then((res) => res.json())
-        .then((data) => setWishlist(new Set(data.map((item) => item._id))))
         .catch((error) => console.error("Error fetching wishlist:", error));
     }
   }, [user]);
@@ -62,6 +60,7 @@ const ProductDetails = () => {
           className="h-[32rem] object-cover rounded-lg mb-4"
         />
       </div>
+
       <div className="space-y-4 w-2/3">
         <h1 className="text-5xl">{book.title}</h1>
         <p>by {book.author}</p>
@@ -104,6 +103,7 @@ const ProductDetails = () => {
             Add to Cart
           </button>
         </div>
+
         {toastMessage && (
           <Toast message={toastMessage} onClose={() => setToastMessage("")} />
         )}

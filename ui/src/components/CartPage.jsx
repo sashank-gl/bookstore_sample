@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import axios from "axios";
-import { CartContext } from "../context/cartContext";
+import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 
 const CartPage = () => {
@@ -33,6 +33,7 @@ const CartPage = () => {
               alt={book.title}
               className="size-12 object-cover rounded-lg"
             />
+
             <div className="flex grow justify-between items-center">
               <div>
                 <p className="text-lg">{book.title}</p>

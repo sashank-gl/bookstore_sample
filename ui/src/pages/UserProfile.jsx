@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { WishlistContext } from "../context/WishlistContext";
-
-import axios from "axios";
-import { CartContext } from "../context/cartContext";
+import { CartContext } from "../context/CartContext";
 
 const UserProfile = () => {
   const { user } = useContext(AuthContext);
@@ -27,6 +26,7 @@ const UserProfile = () => {
       <p className="">
         Hello <span className="font-semibold text-lg">{user.username}</span>,
       </p>
+
       <div>
         <p className=" mb-4">Your Orders ({orders.length})</p>
         {orders.length > 0 ? (
@@ -48,6 +48,7 @@ const UserProfile = () => {
                     </a>
                   ))}
                 </div>
+
                 <div className=" flex flex-col gap-1">
                   <p className=" ">ID: {order._id.slice(-6).toUpperCase()}</p>
                   <p className=" ">
@@ -68,6 +69,7 @@ const UserProfile = () => {
           <p>No recent orders.</p>
         )}
       </div>
+
       <div>
         <p className=" mb-4">Items In Your Cart ({cart.length})</p>
         {cart.length > 0 ? (
@@ -86,6 +88,7 @@ const UserProfile = () => {
           <p>No items in your cart.</p>
         )}
       </div>
+
       <div>
         <p className=" mb-4">Items In Your Wishlist ({wishlist.length})</p>
         {wishlist.length > 0 ? (

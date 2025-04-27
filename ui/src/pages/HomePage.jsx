@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import BookItem from "../components/BookItem";
 
 const HomePage = ({ addToCart, books }) => {
@@ -54,6 +53,7 @@ const HomePage = ({ addToCart, books }) => {
             className="p-2 border border-amber-800 rounded focus:outline-amber-900 w-96"
           />
         </div>
+
         <div>
           <select
             value={genre}
@@ -67,6 +67,7 @@ const HomePage = ({ addToCart, books }) => {
               </option>
             ))}
           </select>
+
           <select
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
@@ -79,6 +80,7 @@ const HomePage = ({ addToCart, books }) => {
               </option>
             ))}
           </select>
+
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
@@ -90,6 +92,7 @@ const HomePage = ({ addToCart, books }) => {
           </select>
         </div>
       </div>
+
       <div>
         {filteredBooks.length === 0 ? (
           <p className="text-center text-xl italic font-semibold ">
